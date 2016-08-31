@@ -34,10 +34,10 @@ myApp.factory('dashboardServices', ['$http', function($http) {
 ]);
 
 //Controllers
-myApp.controller('todaysStatsController', ['$scope', 'dashboardServices', function($scope, dashboardServices) {
+myApp.controller('todaysStatsController', ['$scope', 'dashboardServices','$rootScope', function($scope, dashboardServices,$rootScope) {
 	dashboardServices.getTodaysStats().then(function(result){
 		$scope.data = result.data;	
-	});
+	});        
 }]);
 
 myApp.controller('recentNewsController', ['$scope', 'dashboardServices', function($scope, dashboardServices) {
