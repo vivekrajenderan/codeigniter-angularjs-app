@@ -147,27 +147,21 @@ class Category extends CI_Controller {
 
     public function channel_list() {
         $channel_lists = $this->categories->channel_lists();
-        $data = array('channel_lists' => $channel_lists);
-        $this->load->view('admin/includes/header');
-        $this->load->view('admin/includes/sidebar');
-        $this->load->view('admin/channel/list', $data);
-        $this->load->view('admin/includes/footer');
+        echo json_encode(array('success' => 'true','channel_lists' => $channel_lists));       
     }
 
     public function channel_add() {
         $category_lists = $this->categories->category_lists();
-        $data = array('category_lists' => $category_lists);
-        $this->load->view('admin/includes/header');
-        $this->load->view('admin/includes/sidebar');
-        $this->load->view('admin/channel/add', $data);
-        $this->load->view('admin/includes/footer');
+        echo json_encode(array('success' => 'true','category_lists' => $category_lists));   
     }
 
     //login
-    public function ajax_add_channel() {
+    public function ajax_add_channel() { 
 
 
         if (($this->input->server('REQUEST_METHOD') == 'POST')) {
+            
+            echo "<pre>";print_r($_POST);die;
             $this->form_validation->set_rules('pk_cat_id', 'Category Name', 'trim|required');
             $this->form_validation->set_rules('channel_name', 'Channel Name', 'trim|required|min_length[3]|max_length[30]');
             $this->form_validation->set_rules('channel_no', 'Channel Number', 'trim|required|min_length[3]|max_length[30]');
@@ -192,11 +186,10 @@ class Category extends CI_Controller {
                         'channel_logo' => trim($upload_image['image_file_name'])
                     );
                     $add_channel = $this->categories->save_channel($data);
-                    if ($add_channel == 1) {
-                        $this->session->set_flashdata('SucMessage', ucfirst($this->input->post('channel_name')) . ' Channel Added Successfully');
-                        echo json_encode(array('status' => 1));
+                    if ($add_channel == 1) {                        
+                        echo json_encode(array('status' => 0, 'msg' => ucfirst($this->input->post('channel_name')) . 'Channel has been added Successfully'));
                     } else {
-                        echo json_encode(array('status' => 0, 'msg' => 'Channel Added Not Successfully'));
+                        echo json_encode(array('status' => 0, 'msg' => 'Channel has not been added Successfully'));
                     }
                 }
             }
@@ -204,29 +197,22 @@ class Category extends CI_Controller {
     }
 
     public function channel_edit($pk_ch_id = NULL) {
-
+        $pk_ch_id = $this->input->post('pk_ch_id');
         if ($pk_ch_id != "") {
             $category_lists = $this->categories->category_lists();
-            $get_channel_list = $this->categories->get_channel_list($pk_ch_id);
+            $get_channel_list = $this->categories->get_channel_list(md5($pk_ch_id));
             if (count($get_channel_list) > 0) {
-
-                $data = array('get_channel_list' => $get_channel_list, 'category_lists' => $category_lists, 'pk_ch_id' => $pk_ch_id);
-                $this->load->view('admin/includes/header');
-                $this->load->view('admin/includes/sidebar');
-                $this->load->view('admin/channel/edit', $data);
-                $this->load->view('admin/includes/footer');
-            } else {
-                redirect(base_url() . 'admin/category/channel_list', 'refresh');
+                $get_channel_list[0]['status'] = 'true';
+                echo json_encode($get_channel_list[0]);                
             }
-        } else {
-            redirect(base_url() . 'admin/category/channel_list', 'refresh');
+            
         }
     }
 
     public function ajax_edit_channel() {
 
 
-        if (($this->input->server('REQUEST_METHOD') == 'POST')) {
+        if (($this->input->server('REQUEST_METHOD') == 'POST')) {            
             $this->form_validation->set_rules('pk_cat_id', 'Category Name', 'trim|required');
             $this->form_validation->set_rules('channel_name', 'Channel Name', 'trim|required|min_length[3]|max_length[30]');
             $this->form_validation->set_rules('channel_no', 'Channel Number', 'trim|required|min_length[3]|max_length[30]');

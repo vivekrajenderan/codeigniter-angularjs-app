@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="span12">
+        <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+                <h3> Add Customer</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                <div class="widget big-stats-container">
+                    <div class="widget-content" style="padding:10px;" ng-controller="addChannelController">
+                        <flash-message duration="5000" show-close="true"></flash-message>
+                        <div>
+
+                            <form enctype="multipart/form-data" id="edit-profile" novalidate name="addChannelForm" autocomplete="off" class="form-horizontal">
+                                <fieldset>
+                                    <div class="control-group">											
+                                        <label class="control-label" for="firstname">Category Name<sup>*</sup></label>
+                                        <div class="controls">
+                                            <select class="span4" name="pk_cat_id" ng-model="channel.fk_cat_id" 
+                                                    validator="required" required-error-message="Category is required" valid-method="watch">
+                                                <option value="" data-ng-disabled="true" > -- Select Role  --</option>
+                                                <option data-ng-repeat="x in categorylist" value="{{x.pk_cat_id}}">{{x.cate_name}}</option> 
+                                            </select>
+
+                                        </div> <!-- /controls -->				
+                                    </div> <!-- /control-group -->
+                                    <div class="control-group">											
+                                        <label class="control-label" for="firstname">Channel Name<sup>*</sup></label>
+                                        <div class="controls">
+                                            <input class="span4" name="channel_name" placeholder="Channel Name" ng-model="channel.channel_name" 
+                                                   validator="required,minlength,maxlength" minlength="3" maxlength="20" required-error-message="Channel Name is required" valid-method="watch" />	
+                                        </div> <!-- /controls -->				
+                                    </div> <!-- /control-group -->
+
+
+                                    <div class="control-group">											
+                                        <label class="control-label" for="lastname">Channel NO<sup>*</sup></label>
+                                        <div class="controls">
+                                            <input class="span4" name="channel_no" placeholder="Channel Number" ng-model="channel.channel_no" 
+                                                   validator="required,minlength,maxlength" minlength="3" maxlength="20" required-error-message="Channel Number is required" valid-method="watch" />
+                                        </div> <!-- /controls -->				
+                                    </div> <!-- /control-group -->
+                                    <div class="control-group">											
+                                        <label class="control-label" for="lastname">Channel URL<sup>*</sup></label>
+                                        <div class="controls">
+                                            <input class="span4" name="channel_url" placeholder="Channel URL" ng-model="channel.channel_url" 
+                                                   validator="required,url" minlength="3" maxlength="20" required-error-message="Channel URL is required" valid-method="watch" />
+                                        </div> <!-- /controls -->				
+                                    </div> <!-- /control-group -->
+                                    
+                                    <div class="control-group">											
+                                        <label class="control-label" for="firstname">Channel Logo<sup>*</sup></label>
+                                        <div class="controls">
+                                            <input type="file" file-model="myFile" class="span4" name="channel_logo" placeholder="Channel URL" ng-model="channel.channel_logo" 
+                                                   validator="required" minlength="3" maxlength="20" required-error-message="Channel Logo is required" valid-method="watch" />
+                                        </div>  <!-- /controls -->				
+                                    </div> <!-- /control-group -->
+
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-primary" validation-submit="addChannelForm" ng-click="addChannel()">Save</button> 
+                                        <button ng-click="cancel()" class="btn">Cancel</button>
+                                    </div> <!-- /form-actions -->
+                                </fieldset>
+                            </form>
+
+                        </div>
+
+                    </div>
+                    <!-- /widget-content --> 
+
+                </div>
+            </div>
+        </div>
+        <!-- /widget -->
+    </div>  
+
+</div>
+<!-- /row --> 

@@ -11,6 +11,7 @@ var myApp = angular.module('myApp', [
     'reports',
     'customers',
     'categories',
+    'channels',
     'ngFlash'
 ]);
 

@@ -54,5 +54,12 @@ $route['category-list'] = "admin/category/index";
 $route['add-category'] = "admin/category/ajax_add";
 $route['get-category'] = "admin/category/edit";
 $route['update-category'] = "admin/category/ajax_edit";
+
+// Add Channel
+
+$route['channel-list'] = "admin/category/channel_list";
+$route['add-channel'] = "admin/category/ajax_add_channel";
+$route['get-channel'] = "admin/category/channel_edit";
+$route['update-channel'] = "admin/category/ajax_edit_channel";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
