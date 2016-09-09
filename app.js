@@ -10,6 +10,7 @@ var myApp = angular.module('myApp', [
     'dashboard',
     'reports',
     'customers',
+    'categories',
     'ngFlash'
 ]);
 

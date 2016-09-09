@@ -1,0 +1,22 @@
+<div>
+        <flash-message duration="5000" show-close="true"></flash-message>
+	<form id="edit-profile" novalidate name="editCategoryForm" autocomplete="off" class="form-horizontal">
+		<fieldset>
+			
+			<div class="control-group">											
+				<label class="control-label" for="cate_name">Category Name<sup>*</sup></label>
+				<div class="controls">
+					<input class="span4" name="cate_name" placeholder="Category Name" ng-model="category.cate_name" 
+  validator="required,minlength,maxlength" minlength="3" maxlength="20" required-error-message="Category Name is required" valid-method="watch" />	
+				</div> <!-- /controls -->				
+			</div> <!-- /control-group -->
+				
+			<div class="form-actions">
+				<input type="hidden" name="pk_cat_id" ng-model="category.pk_cat_id">
+				<button type="button" class="btn btn-primary" validation-submit="editCategoryForm" ng-click="updateCategory()">Save</button> 
+				<button ng-click="cancel()" class="btn">Cancel</button>
+			</div> <!-- /form-actions -->
+		</fieldset>
+	</form>
+								
+</div>

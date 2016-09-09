@@ -87,8 +87,7 @@ myApp.factory('customerServices', ['$http', function ($http) {
                 }).error(function (data) {
                     return data;
                 });
-                return promise;
-                //return $http.get('partials/customers/mock/customers.json').success(function(data) { return data; });
+                return promise;                
             },
             addCustomer: function (customerReq) {
                 var promise = $http({
@@ -107,14 +106,31 @@ myApp.factory('customerServices', ['$http', function ($http) {
 //                });
             },
             getCustomer: function (customerId) {
-                return $http.get('partials/customers/mock/get_customer.json?id=' + customerId).success(function (data) {
+                var promise = $http({
+                    url: 'services/get-customer/',
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    data:{pk_cust_id:customerId}
+                }).success(function (data) {                    
+                    return data;
+                }).error(function (data) {                    
                     return data;
                 });
+                return promise
+                //return $http.get('partials/customers/mock/get_customer.json?id=' + customerId).success(function(data) { return data; });
             },
             updateCustomer: function (customerReq) {
-                return $http.post('partials/common/mock/success.json', customerReq).success(function (data) {
+                var promise = $http({
+                    url: 'services/update-customer',
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    data: customerReq
+                }).success(function (data) {
+                    return data;
+                }).error(function (data) {
                     return data;
                 });
+                return promise;
             },
         }
 
@@ -160,17 +176,22 @@ myApp.controller('viewCustomerController', ['$scope', 'customerResolved', functi
         $scope.viewCustomer = customerResolved.data;
     }]);
 
-myApp.controller('editCustomerController', ['$scope', 'customerResolved', 'customerServices', '$location', '$state', function ($scope, customerResolved, customerServices, $location, $state) {
+myApp.controller('editCustomerController', ['$scope', 'customerResolved', 'customerServices', '$location', '$state','Flash', function ($scope, customerResolved, customerServices, $location, $state,Flash) {
         $scope.customer = customerResolved.data;
 
         $scope.updateCustomer = function () {
             if ($scope.editCustomerForm.$valid) {
                 customerServices.updateCustomer($scope.customer).then(function (result) {
                     $scope.data = result.data;
-                    if (!result.data.error) {
-                        $state.transitionTo('customer.view', {
-                            id: $state.params.id
-                        });
+                    if (result.data.status == 1) {
+                        var message =result.data.msg;
+                        Flash.create('success', message);
+                        $location.path("/customers");
+                    }
+                    else
+                    {
+                        var message =result.data.msg;
+                        Flash.create('danger', message);                        
                     }
                 });
             }

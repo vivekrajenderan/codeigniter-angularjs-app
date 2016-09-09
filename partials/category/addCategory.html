@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="span12">
+        <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+                <h3> Add Category</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                <div class="widget big-stats-container">
+                    <div class="widget-content" style="padding:10px;" ng-controller="addCategoryController">
+                        <flash-message duration="5000" show-close="true"></flash-message>
+                        <div>
+                            
+                            <form id="edit-profile" novalidate name="addCategoryForm" autocomplete="off" class="form-horizontal">
+                                <fieldset>
+
+                                    <div class="control-group">											
+                                        <label class="control-label" for="firstname">Category Name<sup>*</sup></label>
+                                        <div class="controls">
+                                            <input class="span4" name="cate_name" placeholder="Category Name" ng-model="category.cate_name" 
+                                                   validator="required,minlength,maxlength" minlength="3" maxlength="20" required-error-message="Category Name is required" valid-method="watch" />	
+                                        </div> <!-- /controls -->				
+                                    </div> <!-- /control-group -->
+
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-primary" validation-submit="addCategoryForm" ng-click="addCategory()">Save</button> 
+                                        <button ng-click="cancel()" class="btn">Cancel</button>
+                                    </div> <!-- /form-actions -->
+                                </fieldset>
+                            </form>
+
+                        </div>
+
+                    </div>
+                    <!-- /widget-content --> 
+
+                </div>
+            </div>
+        </div>
+        <!-- /widget -->
+    </div>  
+
+</div>
+<!-- /row --> 
