@@ -181,11 +181,11 @@ myApp.controller('getChannelsController', ['$scope', 'channelServices', 'dataTab
 
 myApp.controller('addChannelController', ['$scope', 'channelServices', '$location', 'Flash', function ($scope, channelServices, $location, Flash) {
         $scope.channel_logo_error = false;
-        $scope.addChannel = function () {            
+        $scope.addChannel = function () {  
+
             if ($scope.addChannelForm.$valid && $scope.channel.channel_logo) {
                 $scope.channel_logo_error = false;                
-                channelServices.addChannel($scope.channel).then(function (result) {
-
+                channelServices.addChannel($scope.channel).then(function (result) {                          
                     if (result.data.status == 1) {
                         var message = result.data.msg;
                         Flash.create('success', message);
@@ -226,7 +226,7 @@ myApp.controller('viewChannelController', ['$scope', 'channelResolved', function
 myApp.controller('editChannelController', ['$scope', 'channelResolved', 'channelServices', '$location', '$state', 'Flash', function ($scope, channelResolved, channelServices, $location, $state, Flash) {
         $scope.channel = channelResolved.data;
 
-        $scope.updateChannel = function () {
+        $scope.updateChannel = function () {            
             if ($scope.editChannelForm.$valid) {
                 channelServices.updateChannel($scope.channel).then(function (result) {
                     $scope.data = result.data;
