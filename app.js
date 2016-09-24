@@ -12,7 +12,7 @@ var myApp = angular.module('myApp', [
     'customers',
     'categories',
     'channels',
-    'ngFlash'
+    'ngFlash' 
 ]);
 
 //Config phase
