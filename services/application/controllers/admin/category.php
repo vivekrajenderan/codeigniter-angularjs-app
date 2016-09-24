@@ -161,8 +161,8 @@ class Category extends CI_Controller {
 
         if (($this->input->server('REQUEST_METHOD') == 'POST')) {
             
-            echo "<pre>";print_r($_POST);die;
-            $this->form_validation->set_rules('pk_cat_id', 'Category Name', 'trim|required');
+            //echo "<pre>";print_r($_POST);die;
+            $this->form_validation->set_rules('fk_cat_id', 'Category Name', 'trim|required');
             $this->form_validation->set_rules('channel_name', 'Channel Name', 'trim|required|min_length[3]|max_length[30]');
             $this->form_validation->set_rules('channel_no', 'Channel Number', 'trim|required|min_length[3]|max_length[30]');
             $this->form_validation->set_rules('channel_url', 'Channel URL', 'trim|required|min_length[3]|max_length[150]');
@@ -171,23 +171,41 @@ class Category extends CI_Controller {
                 echo json_encode(array('status' => 0, 'msg' => validation_errors()));
                 return false;
             }
-            if (empty($_FILES['channel_logo']['name'])) {
+            if (empty($_POST['channel_logo']->filename)) {
                 echo json_encode(array('status' => 0, 'msg' => "Please upload channel logo"));
             } else {
-                $upload_image = $this->do_upload_image('channel_logo');
-                if ($upload_image['image_message'] != "success") {
+                    $filename="";
+                    if (isset($_POST['channel_logo']->filename)) {
+                    if (isset($_POST['channel_logo']->base64)) {                        
+                    $storeFolder = "./upload/channel";
+                    if (!is_dir($storeFolder)) {
+                        mkdir($storeFolder, 0777, TRUE);
+                    }
+                    if (!is_dir($storeFolder)) {
+                        mkdir($storeFolder, 0777, TRUE);
+                    }
+                    $filename = md5(time()) . '-' . $_POST['channel_logo']->filename;
+
+                    if (isset($_POST['channel_logo']->base64) && !empty($_POST['channel_logo']->base64)) {                                       
+                        $image_data = base64_decode($_POST['channel_logo']->base64);
+                        file_put_contents($storeFolder . '/' . $filename . '', $image_data);                   
+                    }
+                }
+                }
+                
+                if ($filename == "") {
                     echo json_encode(array('status' => 0, 'msg' => "<p>Please upload only image</p>"));
                 }
-                if ($upload_image['image_message'] == "success") {
+                else {
                     $data = array('fk_cat_id' => trim($this->input->post('pk_cat_id')),
                         'channel_name' => trim($this->input->post('channel_name')),
                         'channel_no' => trim($this->input->post('channel_no')),
                         'channel_url' => trim($this->input->post('channel_url')),
-                        'channel_logo' => trim($upload_image['image_file_name'])
+                        'channel_logo' => trim($filename)
                     );
                     $add_channel = $this->categories->save_channel($data);
                     if ($add_channel == 1) {                        
-                        echo json_encode(array('status' => 0, 'msg' => ucfirst($this->input->post('channel_name')) . 'Channel has been added Successfully'));
+                        echo json_encode(array('status' => 1, 'msg' => ucfirst($this->input->post('channel_name')) . 'Channel has been added Successfully'));
                     } else {
                         echo json_encode(array('status' => 0, 'msg' => 'Channel has not been added Successfully'));
                     }

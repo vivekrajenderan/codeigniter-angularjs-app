@@ -10,8 +10,7 @@
                         url: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/,
                         email: /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
                         number: /^\d+$/,
-                        validateAlphaspecial: /^[a-zA-Z.,]+$/,
-                        validateAlphanumSpecial: /^[a-zA-Z0-9\s-*&()!@#$%^|\\/\:;?_+=.,`~'"]+$/,
+                        validateAlphaspecial: /^[a-zA-Z.,]+$/,                       
                         validateNotEmpty: function (value) {
                             if (value.length == 0) {
                                 return false;

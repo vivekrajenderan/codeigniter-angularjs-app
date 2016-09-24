@@ -101,8 +101,7 @@ myApp.factory('channelServices', ['$http', function ($http) {
                 });
                 return promise;
             },
-            addChannel: function (channelReq) {
-               
+            addChannel: function (channelReq) {               
                 var promise = $http({
                     url: 'services/add-channel',
                     method: "POST",
@@ -181,10 +180,12 @@ myApp.controller('getChannelsController', ['$scope', 'channelServices', 'dataTab
 
 
 myApp.controller('addChannelController', ['$scope', 'channelServices', '$location', 'Flash', function ($scope, channelServices, $location, Flash) {
-        $scope.error_msg = "false";
-        $scope.addChannel = function () {
-            if ($scope.addChannelForm.$valid) {                
+        $scope.channel_logo_error = false;
+        $scope.addChannel = function () {            
+            if ($scope.addChannelForm.$valid && $scope.channel.channel_logo) {
+                $scope.channel_logo_error = false;                
                 channelServices.addChannel($scope.channel).then(function (result) {
+
                     if (result.data.status == 1) {
                         var message = result.data.msg;
                         Flash.create('success', message);
@@ -197,13 +198,17 @@ myApp.controller('addChannelController', ['$scope', 'channelServices', '$locatio
                     }
                 });
             }
+            else{
+                    $scope.channel_logo_error= true;
+                    return false;
+                 }
         }
 
         channelServices.categoryAll().then(function (result) {
             $scope.data = result.data;
             if (!result.data.error) {
                 $scope.categorylist = result.data.category_lists;
-                console.log($scope.categorylist);
+               
             }
         });
 

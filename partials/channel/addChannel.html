@@ -44,24 +44,26 @@
                                         <label class="control-label" for="lastname">Channel URL<sup>*</sup></label>
                                         <div class="controls">
                                             <input class="span4" name="channel_url" placeholder="Channel URL" ng-model="channel.channel_url" 
-                                                   validator="required,url" minlength="3" maxlength="20" required-error-message="Channel URL is required" valid-method="watch" />
+                                                   validator="required,url" minlength="3" maxlength="150" required-error-message="Channel URL is required" valid-method="watch" />
                                         </div> <!-- /controls -->				
                                     </div> <!-- /control-group -->
                                     
                                     <div class="control-group">											
                                         <label class="control-label" for="firstname">Channel Logo<sup>*</sup></label>
                                         <div class="controls">
-                                            <input type="file" file-model="myFile" class="span4" name="channel_logo" placeholder="Channel URL" ng-model="channel.channel_logo" 
-                                                   validator="required" minlength="3" maxlength="20" required-error-message="Channel Logo is required" valid-method="watch" />
+                                            <input class="form-control" class="span4" type="file" ng-model="channel.channel_logo" name="channel_logo" base-sixty-four-input maxsize="5000" accept="image/*" > 
+                                              <p ng-show="addChannelForm.channel_logo.$error.maxsize">Files must not exceed 5000 KB</p>
+                                            <p ng-show="channel_logo_error">Please choose image
+                                            </p>                                       
                                         </div>  <!-- /controls -->				
                                     </div> <!-- /control-group -->
-
                                     <div class="form-actions">
                                         <button type="button" class="btn btn-primary" validation-submit="addChannelForm" ng-click="addChannel()">Save</button> 
                                         <button ng-click="cancel()" class="btn">Cancel</button>
                                     </div> <!-- /form-actions -->
                                 </fieldset>
-                            </form>
+                            </form> 
+
 
                         </div>
 

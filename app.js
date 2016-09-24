@@ -12,7 +12,8 @@ var myApp = angular.module('myApp', [
     'customers',
     'categories',
     'channels',
-    'ngFlash' 
+    'ngFlash' ,
+    'naif.base64'
 ]);
 
 //Config phase
